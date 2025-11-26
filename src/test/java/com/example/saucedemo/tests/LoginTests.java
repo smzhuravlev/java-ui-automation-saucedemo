@@ -16,4 +16,24 @@ public class LoginTests extends TestBase {
                 .loginAs("standard_user", "secret_sauce")
                 .assertPageIsOpened();
     }
+
+    @Test
+    @DisplayName("User cannot login with invalid password")
+    void userCannotLoginWithInvalidPassword() {
+        LoginPage loginPage = new LoginPage();
+
+        loginPage
+                .loginWithInvalidCredentials("standard_user", "wrong_password")
+                .assertErrorMessageText("Username and password do not match any user in this service");
+    }
+
+    @Test
+    @DisplayName("Locked out user sees appropriate error message")
+    void lockedOutUserCannotLogin() {
+        LoginPage loginPage = new LoginPage();
+
+        loginPage
+                .loginWithInvalidCredentials("locked_out_user", "secret_sauce")
+                .assertErrorMessageText("Sorry, this user has been locked out.");
+    }
 }
