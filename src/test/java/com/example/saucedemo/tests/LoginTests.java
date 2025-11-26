@@ -1,7 +1,9 @@
 package com.example.saucedemo.tests;
 
 import com.example.saucedemo.config.TestBase;
+import com.example.saucedemo.pages.CartPage;
 import com.example.saucedemo.pages.LoginPage;
+import com.example.saucedemo.pages.ProductsPage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -35,5 +37,24 @@ public class LoginTests extends TestBase {
         loginPage
                 .loginWithInvalidCredentials("locked_out_user", "secret_sauce")
                 .assertErrorMessageText("Sorry, this user has been locked out.");
+    }
+
+    @Test
+    @DisplayName("User can add product to cart and see it in Cart page")
+    void userCanAddProductToCart() {
+        String productName = "Sauce Labs Backpack";
+
+        LoginPage loginPage = new LoginPage();
+
+        ProductsPage productsPage = loginPage
+                .loginAs("standard_user", "secret_sauce")
+                .assertPageIsOpened()
+                .addProductToCart(productName)
+                .assertCartBadge("1");
+
+        CartPage cartPage = productsPage
+                .openCart()
+                .assertPageIsOpened()
+                .assertProductInCart(productName);
     }
 }
