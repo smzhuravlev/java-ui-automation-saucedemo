@@ -13,6 +13,7 @@ public class CartPage {
 
     private final SelenideElement title = $(".title");
     private final ElementsCollection cartItems = $$(".cart_item");
+    private final SelenideElement checkoutButton = $("#checkout");
 
     @Step("Verify Cart page is opened")
     public CartPage assertPageIsOpened() {
@@ -25,5 +26,11 @@ public class CartPage {
         cartItems.findBy(text(productName))
                 .shouldBe(visible);
         return this;
+    }
+
+    @Step("Proceed to checkout from cart page")
+    public CheckoutInformationPage proceedToCheckout() {
+        checkoutButton.shouldBe(visible).click();
+        return new CheckoutInformationPage();
     }
 }
