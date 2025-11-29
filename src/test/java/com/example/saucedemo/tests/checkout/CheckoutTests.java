@@ -1,4 +1,4 @@
-package com.example.saucedemo.tests;
+package com.example.saucedemo.tests.checkout;
 
 import com.example.saucedemo.config.TestBase;
 import com.example.saucedemo.data.Users;
@@ -17,8 +17,12 @@ public class CheckoutTests extends TestBase {
 
         ProductsPage productsPage = loginPage
                 .loginAs(Users.STANDARD)
-                .assertPageIsOpened()
-                .addProductToCart(productName);
+                .assertPageIsOpened();
+
+        productsPage
+                .inventory()
+                .item(productName)
+                .addToCart();
 
         CartPage cartPage = productsPage
                 .header()

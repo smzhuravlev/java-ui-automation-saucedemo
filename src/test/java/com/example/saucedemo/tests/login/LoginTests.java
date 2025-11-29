@@ -1,4 +1,4 @@
-package com.example.saucedemo.tests;
+package com.example.saucedemo.tests.login;
 
 import com.example.saucedemo.config.TestBase;
 import com.example.saucedemo.pages.CartPage;
@@ -49,8 +49,12 @@ public class LoginTests extends TestBase {
 
         ProductsPage productsPage = loginPage
                 .loginAs("standard_user", "secret_sauce")
-                .assertPageIsOpened()
-                .addProductToCart(productName);
+                .assertPageIsOpened();
+
+        productsPage
+                .inventory()
+                .item(productName)
+                .addToCart();
 
         CartPage cartPage = productsPage
                 .header()
