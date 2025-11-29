@@ -6,6 +6,7 @@ import io.qameta.allure.Step;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
+import com.example.saucedemo.data.User;
 
 public class LoginPage {
 
@@ -19,6 +20,11 @@ public class LoginPage {
         fillCredentials(username, password);
         loginButton.click();
         return new ProductsPage();
+    }
+
+    @Step("Login as user '{user}'")
+    public ProductsPage loginAs(User user) {
+        return loginAs(user.getUsername(), user.getPassword());
     }
 
     @Step("Try to login with invalid credentials: '{username}' / '{password}'")

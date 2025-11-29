@@ -4,6 +4,7 @@ import com.example.saucedemo.config.TestBase;
 import com.example.saucedemo.pages.CartPage;
 import com.example.saucedemo.pages.LoginPage;
 import com.example.saucedemo.pages.ProductsPage;
+import com.example.saucedemo.data.Users;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,7 @@ public class LoginTests extends TestBase {
         LoginPage loginPage = new LoginPage();
 
         loginPage
-                .loginAs("standard_user", "secret_sauce")
+                .loginAs(Users.STANDARD)
                 .assertPageIsOpened();
     }
 
@@ -35,7 +36,7 @@ public class LoginTests extends TestBase {
         LoginPage loginPage = new LoginPage();
 
         loginPage
-                .loginWithInvalidCredentials("locked_out_user", "secret_sauce")
+                .loginWithInvalidCredentials(Users.LOCKED_OUT.getUsername(), Users.LOCKED_OUT.getPassword())
                 .assertErrorMessageText("Sorry, this user has been locked out.");
     }
 
