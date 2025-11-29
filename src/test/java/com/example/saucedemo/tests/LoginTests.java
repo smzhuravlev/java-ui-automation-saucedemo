@@ -49,12 +49,31 @@ public class LoginTests extends TestBase {
         ProductsPage productsPage = loginPage
                 .loginAs("standard_user", "secret_sauce")
                 .assertPageIsOpened()
-                .addProductToCart(productName)
-                .assertCartBadge("1");
+                .addProductToCart(productName);
 
         CartPage cartPage = productsPage
+                .header()
+                .assertCartBadge("1")
                 .openCart()
                 .assertPageIsOpened()
                 .assertProductInCart(productName);
     }
+
+    @Test
+    @DisplayName("User can logout via header menu")
+    void userCanLogoutViaHeaderMenu() {
+        LoginPage loginPage = new LoginPage();
+
+        ProductsPage productsPage = loginPage
+                .loginAs("standard_user", "secret_sauce")
+                .assertPageIsOpened();
+
+        productsPage
+                .header()
+                .logout();
+
+        // Here we can assert that login button is visible again,
+        // if we want to add assertion in LoginPage.
+    }
+
 }
